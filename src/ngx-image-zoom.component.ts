@@ -176,43 +176,43 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     /**
      * Template helper methods
      */
-    onThumbImageLoaded() {
-        this.thumbImageLoaded = true;
-        this.checkImagesLoaded();
-    }
+     onThumbImageLoaded() {
+         this.thumbImageLoaded = true;
+         this.checkImagesLoaded();
+     }
 
-    onFullImageLoaded() {
-        this.fullImageLoaded = true;
-        this.checkImagesLoaded();
-    }
+     onFullImageLoaded() {
+         this.fullImageLoaded = true;
+         this.checkImagesLoaded();
+     }
 
-    private checkImagesLoaded() {
-        this.calculateRatioAndOffset();
-        if (this.thumbImageLoaded && this.fullImageLoaded) {
-            this.calculateImageAndLensPosition();
-            this.isReady = true;
-        }
-    }
+     private checkImagesLoaded() {
+         this.calculateRatioAndOffset();
+         if (this.thumbImageLoaded && this.fullImageLoaded) {
+             this.calculateImageAndLensPosition();
+             this.isReady = true;
+         }
+     }
 
     /**
      * Zoom position setters
      */
-    private setZoomPosition(left: number, top: number) {
-        this.latestMouseLeft = Number(left) || this.latestMouseLeft;
-        this.latestMouseTop = Number(top) || this.latestMouseTop;
+     private setZoomPosition(left: number, top: number) {
+         this.latestMouseLeft = Number(left) || this.latestMouseLeft;
+         this.latestMouseTop = Number(top) || this.latestMouseTop;
 
-        const c: Coord = {
-            x: this.latestMouseLeft,
-            y: this.latestMouseTop
-        };
-        this.onZoomPosition.emit(c);
-    }
+         const c: Coord = {
+             x: this.latestMouseLeft,
+             y: this.latestMouseTop
+         };
+         this.onZoomPosition.emit(c);
+     }
 
 
     /**
      * Mouse wheel event
      */
-    private onMouseWheel(event: any) {
+     private onMouseWheel(event: any) {
         event = window.event || event; // old IE
         const direction = Math.max(Math.min((event.wheelDelta || -event.detail), 1), -1);
         if (direction > 0) {
@@ -235,127 +235,136 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     /**
      * Hover mode
      */
-    private hoverMouseEnter(event: MouseEvent) {
-        this.zoomOn(event);
-    }
+     private hoverMouseEnter(event: MouseEvent) {
+         this.zoomOn(event);
+     }
 
-    private hoverMouseLeave() {
-        this.zoomOff();
-    }
+     private hoverMouseLeave() {
+         this.zoomOff();
+     }
 
-    private hoverMouseMove(event: MouseEvent) {
-        this.calculateZoomPosition(event);
-    }
+     private hoverMouseMove(event: MouseEvent) {
+         this.calculateZoomPosition(event);
+     }
 
     /**
      * Toggle mode
      */
-    private toggleClick(event: MouseEvent) {
-        if (this.zoomingEnabled) {
-            this.zoomOff();
-        } else {
-            this.zoomOn(event);
-        }
-        this.zoomingEnabled = !this.zoomingEnabled;
-    }
+     private toggleClick(event: MouseEvent) {
+         if (this.zoomingEnabled) {
+             this.zoomOff();
+         } else {
+             this.zoomOn(event);
+         }
+         this.zoomingEnabled = !this.zoomingEnabled;
+     }
 
     /**
      * Click mode
      */
-    private clickStarter(event: MouseEvent) {
-        if (this.zoomingEnabled === false) {
-            this.zoomingEnabled = true;
-            this.zoomOn(event);
-        }
-    }
+     private clickStarter(event: MouseEvent) {
+         if (this.zoomingEnabled === false) {
+             this.zoomingEnabled = true;
+             this.zoomOn(event);
+         }
+     }
 
-    private clickMouseLeave() {
-        this.zoomOff();
-        this.zoomingEnabled = false;
-    }
+     private clickMouseLeave() {
+         this.zoomOff();
+         this.zoomingEnabled = false;
+     }
 
-    private clickMouseMove(event: MouseEvent) {
-        if (this.zoomingEnabled) {
-            this.calculateZoomPosition(event);
-        }
-    }
+     private clickMouseMove(event: MouseEvent) {
+         if (this.zoomingEnabled) {
+             this.calculateZoomPosition(event);
+         }
+     }
 
     /**
      * Hover freeze mode
      */
-    private hoverFreezeMouseEnter(event: MouseEvent) {
-        if (this.zoomingEnabled && !this.zoomFrozen) {
-            this.zoomOn(event);
-        }
-    }
+     private hoverFreezeMouseEnter(event: MouseEvent) {
+         if (this.zoomingEnabled && !this.zoomFrozen) {
+             this.zoomOn(event);
+         }
+     }
 
-    private hoverFreezeMouseLeave() {
-        if (this.zoomingEnabled && !this.zoomFrozen) {
-            this.zoomOff();
-        }
-    }
+     private hoverFreezeMouseLeave() {
+         if (this.zoomingEnabled && !this.zoomFrozen) {
+             this.zoomOff();
+         }
+     }
 
-    private hoverFreezeMouseMove(event: MouseEvent) {
-        if (this.zoomingEnabled && !this.zoomFrozen) {
-            this.calculateZoomPosition(event);
-        }
-    }
+     private hoverFreezeMouseMove(event: MouseEvent) {
+         if (this.zoomingEnabled && !this.zoomFrozen) {
+             this.calculateZoomPosition(event);
+         }
+     }
 
-    private hoverFreezeClick(event: MouseEvent) {
-        if (this.zoomingEnabled && this.zoomFrozen) {
-            this.zoomingEnabled = false;
-            this.zoomFrozen = false;
-            this.zoomOff();
-        } else if (this.zoomingEnabled) {
-            this.zoomFrozen = true;
-        } else {
-            this.zoomingEnabled = true;
-            this.zoomOn(event);
-        }
-    }
+     private hoverFreezeClick(event: MouseEvent) {
+         if (this.zoomingEnabled && this.zoomFrozen) {
+             this.zoomingEnabled = false;
+             this.zoomFrozen = false;
+             this.zoomOff();
+         } else if (this.zoomingEnabled) {
+             this.zoomFrozen = true;
+         } else {
+             this.zoomingEnabled = true;
+             this.zoomOn(event);
+         }
+     }
 
     /**
      * Private helper methods
      */
-    private zoomOn(event: MouseEvent) {
-        if (this.isReady) {
-            this.calculateRatioAndOffset();
-            this.display = 'block';
-            this.calculateZoomPosition(event);
-        }
-    }
+     private zoomOn(event: MouseEvent) {
+         if (this.isReady) {
+             this.calculateRatioAndOffset();
+             this.display = 'block';
+             this.calculateZoomPosition(event);
+         }
+     }
 
-    private zoomOff() {
-        this.display = 'none';
-    }
+     private zoomOff() {
+         this.display = 'none';
+     }
 
-    private calculateZoomPosition(event: MouseEvent) {
-        const left = (event.pageX - this.offsetLeft);
-        const top = (event.pageY - this.offsetTop);
+     private calculateZoomPosition(event: MouseEvent) {
+         const left = (event.pageX - this.offsetLeft);
+         const top = (event.pageY - this.offsetTop);
 
-        const newLeft = Math.max(Math.min(left, this.thumbWidth), 0);
-        const newTop = Math.max(Math.min(top, this.thumbHeight), 0);
+         let newLeft;
+         if(left > 0){
+             newLeft = Math.max(Math.min(left, this.thumbWidth), 0)
+         }else{
+             if(this.thumbWidth + left > 0){
+                 newLeft = Math.max(Math.min(this.thumbWidth + left, this.thumbWidth), 0);
+             }else{
+                 newLeft = Math.max(Math.min(this.thumbWidth-(Math.abs(left)-this.thumbWidth), this.thumbWidth), 0);
+             }
+         }
+         const newTop = Math.max(Math.min(top, this.thumbHeight), 0);
 
-        this.setZoomPosition(newLeft, newTop);
+         this.setZoomPosition(newLeft, newTop);
 
-        this.calculateImageAndLensPosition();
-    }
+         this.calculateImageAndLensPosition();
+     }
 
-    private calculateImageAndLensPosition() {
-        let lensLeftMod = 0, lensTopMod = 0;
+     private calculateImageAndLensPosition() {
+         let lensLeftMod = 0, lensTopMod = 0;
 
-        if (this.enableLens) {
-            lensLeftMod = this.lensLeft = this.latestMouseLeft - this.lensWidth / 2;
-            lensTopMod = this.lensTop = this.latestMouseTop - this.lensHeight / 2;
-        }
+         if (this.enableLens) {
+             lensLeftMod = this.lensLeft = this.latestMouseLeft - this.lensWidth / 2;
+             lensTopMod = this.lensTop = this.latestMouseTop - this.lensHeight / 2;
+         }
 
-        this.fullImageLeft = (this.latestMouseLeft * -this.xRatio) - lensLeftMod;
-        this.fullImageTop = (this.latestMouseTop * -this.yRatio) - lensTopMod;
-    }
+         this.fullImageLeft = (this.latestMouseLeft * -this.xRatio) - lensLeftMod;
+         this.fullImageTop = (this.latestMouseTop * -this.yRatio) - lensTopMod;
+     }
 
-    private calculateRatioAndOffset() {
-        this.thumbWidth = this.imageThumbnail.nativeElement.naturalWidth;
-        this.thumbHeight = this.imageThumbnail.nativeElement.naturalHeight;
+     private calculateRatioAndOffset() {
+         this.thumbWidth = this.imageThumbnail.nativeElement.naturalWidth;
+         this.thumbHeight = this.imageThumbnail.nativeElement.naturalHeight;
 
         // If lens is disabled, set lens size to equal thumb size and position it on top of the thumb
         if (!this.enableLens) {
